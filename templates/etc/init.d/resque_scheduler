@@ -1,0 +1,24 @@
+#! /bin/sh
+
+cd_path="%CURRENT%"
+export_gem_home="export GEM_HOME=%GEMHOME%"
+
+case "$1" in
+  start)
+        echo -n "Starting resque_scheduler: "
+                su - deploy -c "cd $cd_path && $export_gem_home && bundle exec rake RAILS_ENV=%RAILSENV% PIDFILE=%PIDFILE% resque:scheduler >> log/resque_scheduler.log 2>&1 &"
+        echo "OK."
+        ;;
+  stop)
+        echo -n "Stopping resque_scheduler: "
+                su - deploy -c "kill -QUIT `cat $cd_path/%PIDFILE%` && rm -f $cd_path/%PIDFILE% && exit 0"
+        echo "done."
+        ;;
+      *)
+            N=/etc/init.d/resque_scheduler
+            echo "Usage: $N {start|stop}" >&2
+            exit 1
+            ;;
+esac
+
+exit 0

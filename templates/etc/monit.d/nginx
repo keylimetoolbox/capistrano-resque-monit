@@ -1,0 +1,4 @@
+check host nginx address %HOST%
+  if failed host %HOST% port 80 then alert
+  start = "/sbin/service nginx start" with timeout 60 seconds
+  stop = "/sbin/service nginx stop"

@@ -1,0 +1,7 @@
+check process #{file}
+  with pidfile #{current_path}/tmp/pids/#{file}.pid
+  start program = "/etc/init.d/#{file} start" with timeout 60 seconds
+  stop program = "/etc/init.d/#{file} stop"
+  #{depends}
+  if totalmem is greater than #{mem} MB for 10 cycles then restart  # eating up memory?
+  group #{resque_prefix}_resque_workers

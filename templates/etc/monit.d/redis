@@ -1,0 +1,3 @@
+check process redis with pidfile "/var/run/redis/redis.pid"
+  start = "/etc/init.d/redis start" with timeout 60 seconds
+  stop = "/etc/init.d/redis stop"

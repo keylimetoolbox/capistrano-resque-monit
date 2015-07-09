@@ -1,0 +1,24 @@
+#! /bin/sh
+
+cd_path="#{current_path}"
+export_gem_home="export GEM_HOME=#{rvm_path}/gems/#{rvm_ruby_string}"
+
+case "$1" in
+  start)
+        echo -n "Starting #{file}: "
+                su - deploy -c "cd $cd_path && $export_gem_home && bundle exec rake RAILS_ENV=#{rails_env} QUEUE=#{queue} VERBOSE=1 PIDFILE=tmp/pids/#{file}.pid resque:work >> log/#{file}.log 2>&1 &"
+        echo "OK."
+        ;;
+  stop)
+        echo -n "Stopping #{file}: "
+                su - deploy -c "kill -QUIT `cat $cd_path/tmp/pids/#{file}.pid` && rm -f $cd_path/tmp/pids/#{file}.pid && exit 0"
+        echo "done."
+        ;;
+      *)
+            N=/etc/init.d/#{file}
+            echo "Usage: $N {start|stop}" >&2
+            exit 1
+            ;;
+esac
+
+exit 0
