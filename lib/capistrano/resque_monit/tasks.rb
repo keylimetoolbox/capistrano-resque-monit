@@ -1,5 +1,5 @@
-load 'lib/monit'
-load 'lib/resque'
+load 'capistrano/resque_monit/monit'
+load 'capistrano/resque_monit/resque'
 
 # TODO: Update templates path to Gem root path
 
@@ -16,8 +16,8 @@ namespace :monit do
   end
 end
 
-namespace :resque do
-  desc 'Set up init.d and monit.d files for all resque workers'
+namespace :resque_monit do
+  desc 'Set up init.d and monit.d files for all resque_monit workers'
   task :config_worker, :roles => :worker, :except => { :no_release => true } do
     sed_initd 'resque_scheduler', :worker
     sed_bin 'redis-check-queue', :worker

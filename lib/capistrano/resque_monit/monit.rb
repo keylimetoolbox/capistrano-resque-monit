@@ -39,7 +39,7 @@ end
 
 def sed_monitd(file, role)
   sed_template "templates/etc/monit.d/#{file}", {
-      HOST: server_name
+      HOST: server_name,
       EMAIL: monit_email
   }, '/etc/monit.d/#{file}'
 end
@@ -51,9 +51,10 @@ def sed_monitrc
     URL: monit_url
   }, '/etc/monitrc'
   run 'sudo chmod 600 /etc/monitrc'
+end
 
 def sed_bin(file, role)
-  resque_config = YAML.load_file('config/resque.yml')
+  resque_config = YAML.load_file('config/resque_monit.yml')
   (host, port) = resque_config[rails_env].split ':'
   sed_template "templates/usr/local/bin/#{file}", {
       RESQUE_HOST: host,
@@ -63,7 +64,7 @@ def sed_bin(file, role)
 end
 
 def sed_template file, values, dest
-  cmds = values.map { |k, v| "-e 's/%#{k}%/#{v.gsub(%r(/), '\\/')}/g'"}.join ' '
+  cmds = values.map { |k, v| "-e 's/%#{k}%/#{v.gsub(%r(/), '\\/')}/g'" }.join ' '
   run "cd #{deploy_to}/current && sudo sed #{cmds} #{file} > #{dest}"
 end
 

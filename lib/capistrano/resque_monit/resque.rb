@@ -2,10 +2,10 @@
 
 # TODO: Update template paths
 
-after 'deploy', 'resque:restart'
-after 'deploy:migrations', 'resque:restart'
+after 'deploy', 'resque_monit:restart'
+after 'deploy:migrations', 'resque_monit:restart'
 
-namespace :resque do
+namespace :resque_monit do
 
   task :restart, roles: :worker, :except => { :no_release => true } do
     run 'sudo monit reload'
