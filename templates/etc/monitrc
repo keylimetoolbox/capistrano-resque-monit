@@ -6,7 +6,7 @@ set logfile syslog facility log_daemon
 set mail-format { subject: monit alert [$HOST]: $EVENT $SERVICE }
 include /etc/monit.d/*
 set httpd port 2812 and
-  allow %USER%:%PASSWORD%
+  allow #{USER}:#{PASSWORD}
 
 set eventqueue basedir /var/monit slots 1000
 
@@ -14,4 +14,4 @@ set eventqueue basedir /var/monit slots 1000
 # the URL, that is, monit:monit, specify a username and password
 # registered in M/Monit. If you change the password for the monit
 # user in M/Monit it must be changed here as well.
-set mmonit %URL%
+set mmonit #{URL}

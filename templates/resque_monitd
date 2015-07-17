@@ -4,4 +4,4 @@ check process #{file}
   stop program = "/etc/init.d/#{file} stop"
   #{depends}
   if totalmem is greater than #{mem} MB for 10 cycles then restart  # eating up memory?
-  group #{resque_prefix}_resque_workers
+  group resque_workers_#{resque_application}

@@ -1,7 +1,7 @@
 #! /bin/sh
 
 cd_path="#{current_path}"
-export_gem_home="export GEM_HOME=#{rvm_path}/gems/#{rvm_ruby_string}"
+export_gem_home="export GEM_HOME=#{rvm_path}/gems/#{rvm_ruby_version}"
 
 case "$1" in
   start)

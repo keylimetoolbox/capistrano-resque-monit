@@ -1,17 +1,17 @@
 #! /bin/sh
 
-cd_path="%CURRENT%"
-export_gem_home="export GEM_HOME=%GEMHOME%"
+cd_path="#{current_path}"
+export_gem_home="export GEM_HOME=#{gem_home}"
 
 case "$1" in
   start)
         echo -n "Starting resque_scheduler: "
-                su - deploy -c "cd $cd_path && $export_gem_home && bundle exec rake RAILS_ENV=%RAILSENV% PIDFILE=%PIDFILE% resque:scheduler >> log/resque_scheduler.log 2>&1 &"
+                su - deploy -c "cd $cd_path && $export_gem_home && bundle exec rake RAILS_ENV=#{rails_env} PIDFILE=tmp/pids/#{file}.pid resque:scheduler >> log/resque_scheduler.log 2>&1 &"
         echo "OK."
         ;;
   stop)
         echo -n "Stopping resque_scheduler: "
-                su - deploy -c "kill -QUIT `cat $cd_path/%PIDFILE%` && rm -f $cd_path/%PIDFILE% && exit 0"
+                su - deploy -c "kill -QUIT `cat $cd_path/tmp/pids/#{file}.pid` && rm -f $cd_path/tmp/pids/#{file}.pid && exit 0"
         echo "done."
         ;;
       *)

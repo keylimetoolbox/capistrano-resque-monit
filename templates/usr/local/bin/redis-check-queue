@@ -1,2 +1,2 @@
 #!/bin/bash
-/usr/local/bin/redis-cli -h %RESQUE_HOST% -p %RESQUE_PORT% ping
+/usr/local/bin/redis-cli -h #{RESQUE_HOST} -p #{RESQUE_PORT} ping
