@@ -53,7 +53,7 @@ namespace :monit do
         script = Capistrano::ResqueMonit.template(
             'etc/init.d/resque_scheduler',
             gem_home: fetch(:gem_home),
-            current_path: fetch(:current_path),
+            current_path: current_path,
             rails_env: fetch(:rails_env),
             file: file
         )

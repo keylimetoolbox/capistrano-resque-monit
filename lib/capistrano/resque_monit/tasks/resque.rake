@@ -49,7 +49,7 @@ def resque_worker_monitd(name, host, options = {})
       'resque_monitd',
       depends: depends,
       file: file,
-      current_path: fetch(:current_path),
+      current_path: current_path,
       mem: mem,
       resque_application: fetch(:resque_application)
   )
@@ -63,7 +63,7 @@ def resque_worker_initd(worker, host, options = {})
   script = Capistrano::ResqueMonit.template(
       'resque_initd',
       gem_home: fetch(:gem_home),
-      current_path: fetch(:current_path),
+      current_path: current_path,
       rails_env: fetch(:rails_env),
       queue: queue,
       file: file
