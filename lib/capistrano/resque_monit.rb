@@ -28,5 +28,15 @@ module Capistrano
         execute :sudo, "chown root:root #{destination}"
       end
     end
+
+    def self.find_gem_home(host)
+      gem_home = nil
+      SSHKit::Coordinator.new(host).each do
+        within current_path do
+          gem_home = capture(:echo, '$GEM_HOME')
+        end
+      end
+      gem_home
+    end
   end
 end
