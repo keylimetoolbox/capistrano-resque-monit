@@ -24,6 +24,7 @@ end
 
 after 'deploy', 'resque:restart'
 before 'monit:config', 'resque:config_workers'
+after 'monit:config', 'resque:restart'
 
 
 namespace :load do
